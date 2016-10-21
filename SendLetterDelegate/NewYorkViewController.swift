@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NewYorkViewController: UIViewController {
+class NewYorkViewController: UIViewController, LondonViewControllerDelegate {
     
     // View elements
     @IBOutlet weak var receivedHeaderLabel: UILabel!
@@ -35,6 +35,15 @@ class NewYorkViewController: UIViewController {
         animatePackage {
             self.performSegue(withIdentifier: "sentSegue", sender: nil)
         }
+        
+    }
+    
+    func letterSent(from: LondonViewController, message: String) {
+        letterTextView.text = message
+        receivedHeaderLabel.isHidden = false
+        letterTextView.isHidden = false
+        packageImageView.isHidden = true
+        sendButton.isHidden = true
     }
     
     // MARK: Segue
@@ -44,6 +53,9 @@ class NewYorkViewController: UIViewController {
         if segue.identifier == "sentSegue" {
             
         }
+        
+        let dest = segue.destination as! LondonViewController
+        dest.delegate = self
         
     }
     
@@ -84,6 +96,7 @@ class NewYorkViewController: UIViewController {
         }
         
     }
-
+    
+    
 }
 
